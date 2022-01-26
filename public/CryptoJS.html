@@ -8,11 +8,29 @@
   <title>Document</title>
 </head>
 <body>
+  <label for="key">
+    key
+    <input id="key" type="text">
+  </label>
+
+  <label for="msg">
+    msg
+    <input id="msg" type="text">
+  </label>
+
+  
   
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
 <script>
-  var key = '9493259848'
+  $(document).keyup(function(event){ 
+      if(event.keyCode ==13){
+        localStorage.setItem($('#key').val(),AES_Encrypt($('#msg').val()))
+        $('#key,#msg').val('')
+      }
+   });
+  var key = ''
   function AES_Encrypt (plaintext) {
     const ciphertext = CryptoJS.AES.encrypt(plaintext, key, {
       mode: CryptoJS.mode.CBC,
@@ -20,19 +38,5 @@
     }).toString();
     return ciphertext;
   }
-
-
-  // function AES_Decrypt (jsonStr)  {
-  //   const plaintext = CryptoJS.AES.decrypt(jsonStr, key, {
-  //     mode: CryptoJS.mode.CBC,
-  //     padding: CryptoJS.pad.Pkcs7
-  //   }).toString(CryptoJS.enc.Utf8);
-  //   return plaintext;
-  // }
-
-  const hash = AES_Encrypt('验证方法是否正确1234')
-  console.log(hash)
-  // const str = AES_Decrypt(hash)
-  // console.log(str)
 </script>
 </html>
